@@ -83,8 +83,7 @@ struct Dream: Equatable {
             // Uppercase just the first character in the case name.
             let secondIndex = caseName.index(after: caseName.startIndex)
 
-            let filePrefix = caseName.substring(to: secondIndex).uppercased() + caseName.substring(from: secondIndex)
-
+            let filePrefix = caseName.prefix(upTo: secondIndex).capitalized + caseName.suffix(from: secondIndex)
             return filePrefix + "Particle"
         }
 

@@ -105,13 +105,13 @@ class DreamDetailViewController: UICollectionViewController, UICollectionViewDel
         var indexPathsToDeselect = [IndexPath]()
 
         if let (fromCreature, _) = diff.creatureChange {
-            let indexOfOld = Dream.Creature.all.index(of: fromCreature)!
+            let indexOfOld = Dream.Creature.all.firstIndex(of: fromCreature)!
             let indexPathOfOld = IndexPath(row: indexOfOld, section: Section.creature.rawValue)
             indexPathsToDeselect.append(indexPathOfOld)
         }
 
         indexPathsToDeselect += diff.removedEffects.map { removedEffect in
-            let index = Dream.Effect.all.index(of: removedEffect)!
+            let index = Dream.Effect.all.firstIndex(of: removedEffect)!
             return IndexPath(row: index, section: Section.effect.rawValue)
         }
 
@@ -138,10 +138,10 @@ class DreamDetailViewController: UICollectionViewController, UICollectionViewDel
         collectionView?.register(DreamPreviewHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: DreamPreviewHeaderReusableView.reuseIdentifier)
 
         // Set up initially selected cells.
-        let selectedCreatureIndex = Dream.Creature.all.index(of: self.dream.creature)!
+        let selectedCreatureIndex = Dream.Creature.all.firstIndex(of: self.dream.creature)!
         let selectedCreatureIndexPath = IndexPath(row: selectedCreatureIndex, section: Section.creature.rawValue)
 
-        let selectedEffectIndexPaths = Dream.Effect.all.enumerated().flatMap { idx, effect -> IndexPath? in
+        let selectedEffectIndexPaths = Dream.Effect.all.enumerated().compactMap { idx, effect -> IndexPath? in
             if dream.effects.contains(effect) {
                 return IndexPath(row: idx, section: Section.effect.rawValue)
             }
